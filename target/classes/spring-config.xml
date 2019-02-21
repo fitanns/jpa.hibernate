@@ -1,0 +1,39 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="driver1" class="ua.kiev.prog.spring.sample0.Driver">
+        <constructor-arg value="Zelensky"/>
+        <constructor-arg value="0"/>
+    </bean>
+    <bean id="driver2" class="ua.kiev.prog.spring.sample0.Driver">
+        <constructor-arg value="Boiko"/>
+        <constructor-arg value="0"/>
+    </bean>
+    <bean id="car1" class="ua.kiev.prog.spring.sample0.Car">
+        <property name="model" value="Tesla"/>
+        <property name="year" value="2016"/>
+        <property name="driver" ref="driver1"/>
+    </bean>
+    <bean id="car2" class="ua.kiev.prog.spring.sample0.Car">
+        <constructor-arg value="VAZ"/>
+        <constructor-arg value="1970"/>
+        <constructor-arg ref="driver2"/>
+    </bean>
+
+    <bean id="datePreprocessor" class="ua.kiev.prog.spring.sample1.DatePreprocessor"/>
+
+    <bean id="fileLogger" class="ua.kiev.prog.spring.sample1.FileLoggerAPI" init-method="open" destroy-method="close">
+        <constructor-arg value="log.txt"/>
+        <property name="preprocessor" ref="datePreprocessor"/> <!-- optional -->
+    </bean>
+
+    <bean id="consoleLogger" class="ua.kiev.prog.spring.sample1.ConsoleLoggerAPI">
+        <property name="preprocessor" ref="datePreprocessor"/> <!-- optional -->
+    </bean>
+
+    <bean id="notifier" class="ua.kiev.prog.spring.sample1.Notifier">
+        <constructor-arg ref="fileLogger"/>
+    </bean>
+</beans>
